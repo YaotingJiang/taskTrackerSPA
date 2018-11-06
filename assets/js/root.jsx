@@ -4,85 +4,80 @@ import _ from 'lodash';
 import $ from 'jquery';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './header';
+import UserList from './user_list';
+import TaskList from './task_list';
+import { Provider } from 'react-redux';
+import api from './api';
 
 
-
-export default function root_init(node) {
-  let prods = window.tasks;
-  ReactDOM.render(<Root tasks= {window.tasks} />, node);
+export default function root_init(node, store) {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Root tasks={window.tasks} />
+    </Provider>, node);
 }
+
+
+// export default function root_init(node) {
+//   let prods = window.tasks;
+//   ReactDOM.render(<Root tasks= {window.tasks} />, node);
+// }
 
 class Root extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      products: props.tasks,
-      users: [],
-      session: null,
-      sessioncreated: false,
-    };
-    this.fetch_users();
-    // this.fetch_tasks();
+    // this.state = {
+    //   products: props.tasks,
+    //   users: [],
+    //   tasks: [],
+    //   session: null,
+    //   sessioncreated: false,
+    // };
+
+    api.fetch_users();
+    api.fetch_tasks();
+
   }
-
-    fetch_path(path, on_success) {
-    $.ajax(path, {
-      method: "get",
-      dataType: "json",
-      contentType: "application/json; charset=UTF-8",
-      data: "",
-      success: on_success,
-    });
-  }
-
-  fetch_users() {
-    $.ajax("/api/v1/users", {
-      method: "get",
-      dataType: "json",
-      contentType: "application/json; charset=UTF-8",
-      data: "",
-      success: (resp) => {
-        let state1 = _.assign({}, this.state, { users: resp.data });
-        this.setState(state1);
-      }
-    });
-  }
-
-
-  fetch_tasks() {
-    this.fetch_path(
-      "/api/v1/products",
-      (resp) => {
-        let state1 = _.assign({}, this.state, {
-          tasks: resp.data,
-        });
-        this.setState(state1);
-      }
-    );
-  }
-
-
-  create_session(email, password) {
-    $.ajax("/api/v1/sessions", {
-      method: "post",
-      dataType: "json",
-      contentType: "application/json; charset=UTF-8",
-      data: JSON.stringify({email, password}),
-      success: (resp) => {
-        let state1 = _.assign({}, this.state, { session: resp.data, sessioncreated: true });
-        this.setState(state1);
-      }
-    });
- }
-
 
   render() {
-    return (
+    return <div>
       <Router>
         <div>
-          <Header root={this} session={this.state.session} sessioncreated={this.state.sessioncreated} />
+          <Header />
+          <div className="row">
+            <div className="col-8">
+              <Route path="/" exact={true} render={() =>
+                <TaskList />
+              } />
+              <Route path="/users" exact={true} render={() =>
+                <TaskList />
+              } />
+            </div>
+          </div>
         </div>
       </Router>
-    );
+    </div>;
   }
 }
+
+
+
+  // render() {
+  //   return (
+  //     <Router>
+  //       <div>
+  //         <Header root={this} session={this.state.session} />
+  //         <div className="container">
+  //           <Route path="/" exact={true} render={() =>
+  //               <TaskList root={this}
+  //                            tasks={this.props.tasks}/>
+  //
+  //               } />
+  //             <Route path="/users" exact={true} render={() =>
+  //               <UserList users={this.state.users} />
+  //             } />
+  //         </div>
+  //       </div>
+  //     </Router>
+  //   );
+  // }
