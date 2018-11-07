@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import api from './api';
-// import {NavBar, NavItem, Input, Button, Form, FormGroup} from 'reactstrap';
 import { Form, FormGroup, NavItem, Input, Button } from 'reactstrap';
 
 let LoginForm = connect(({login}) => {return {login};})((props) => {
@@ -39,24 +38,21 @@ let LoginForm = connect(({login}) => {return {login};})((props) => {
 
 
 let Session = connect(({token}) => {return {token};})((props) => {
-  function destory_token() {
-    props.dispatch({
-      type: 'DESTROY_TOKEN'
-    });
+  function delete_token(ev) {
+      api.get_logout_request();
   }
 
 
   return <div className="navbar-text">
       {props.token.name}
-      <Button onClick={destory_token}>Log out</Button>
+      <Button onClick={delete_token}>Log out</Button>
     </div>;
 });
 
 function Header(props) {
-  // let {root, session} = props;
   let session_info;
   if(props.token) {
-    session_info = <Session session={props.token} />
+    session_info = <Session token={props.token} />
   } else {
     session_info = <LoginForm />
   }

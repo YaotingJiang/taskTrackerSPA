@@ -37,35 +37,13 @@ function form(state = empty_form, action) {
     case 'UPDATE_FORM':
       return Object.assign({}, state, action.data);
     case 'CLEAR_FORM':
-      let clear = {
-        title: "",
-        desc: "",
-        time: 0,
-        completed: false
-      }
-      return Object.assign({}, state, clear);
+      return empty_form;
     case 'SET_TOKEN':
-      let set_token = {
-        creator_id: action.token.user_id,
-        token: action.token.token,
-        user_id: action.token.user_id,
-      }
-      return Object.assign({}, state, set_token);
+      return Object.assign({}, state, action.token);
     default:
       return state;
   }
 }
-
-// function session(state = null, action) {
-//   switch (action.type) {
-//     case 'NEW_SESSION':
-//       return action.data;
-//     case 'DESOTRY_SESSION':
-//       return null;
-//   default:
-//     return state;
-//   }
-// }
 
 let empty_token = {
   name: "",
@@ -75,10 +53,8 @@ let empty_token = {
 function token(state = empty_token, action) {
   switch(action.type) {
     case 'SET_TOKEN':
-      return Object.assign({}, state, action.data);
-      // return action.token;
-    case 'DESTROY_TOKEN' :
-      return empty_token;
+      //return Object.assign({}, state, action.data);
+      return action.token;
     default:
       return state;
   }
@@ -93,8 +69,6 @@ function token(state = empty_token, action) {
    switch(action.type) {
      case 'UPDATE_LOGIN_FORM':
        return Object.assign({}, state, action.data);
-     case 'DESOTRY_TOKEN':
-       return userlogin;
      default:
        return state;
    }

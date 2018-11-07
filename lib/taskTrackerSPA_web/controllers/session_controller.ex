@@ -6,7 +6,7 @@ defmodule TaskTrackerSPAWeb.SessionController do
   alias TaskTrackerSPA.Users.User
 
   def create(conn, %{"email" => email, "password" => password}) do
-    with %User{} = user <- Users.get_and_auth_user(email, password) do
+    with %User{} = user <- TaskTrackerSPA.Users.get_and_auth_user(email, password) do
       resp = %{
         data: %{
           token: Phoenix.Token.sign(TaskTrackerSPAWeb.Endpoint, "user_id", user.id),

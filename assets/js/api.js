@@ -47,23 +47,6 @@ send_post(path, data, callback) {
     );
   }
 
-  create_session(email, password) {
-    this.send_post(
-      "/api/v1/sessions",
-      {email, password},
-      (resp) => {
-        store.dispatch({
-          type: 'SET_TOKEN',
-          data: resp.data,
-        });
-      }
-    );
-
-//  console.log("session created: " + email = " " + password);
-  }
-
-
- // add path in the router, token controller
   get_login_request(data) {
     $.ajax("/api/v1/sessions", {
       method: "post",
@@ -84,23 +67,24 @@ send_post(path, data, callback) {
       }
     });
   }
+
+  get_logout_request(data) {
+    $.ajax("/api/v1/sessions", {
+      method: "delete",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(data),
+      success: (resp) => {
+        store.dispatch(
+          {
+            type: "SET_TOKEN",
+            token: null,
+          }
+        )
+      }
+    });
+  }
+
 }
-
-
-
-// create_session(email, password) {
-//   $.ajax("/api/v1/sessions", {
-//     method: "post",
-//     dataType: "json",
-//     contentType: "application/json; charset=UTF-8",
-//     data: JSON.stringify({email, password}),
-//     success: (resp) => {
-//       let state1 = _.assign({}, this.state, { session: resp.data, sessioncreated: true });
-//       this.setState(state1);
-//     }
-//   });
-//    console.log(this.props.tasks);
-//  }
-// }
 
 export default new TheServer();

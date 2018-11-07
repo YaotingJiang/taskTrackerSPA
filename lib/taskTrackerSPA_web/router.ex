@@ -25,6 +25,7 @@ defmodule TaskTrackerSPAWeb.Router do
     pipe_through :api
 
     resources "/sessions", SessionController, only: [:create]
+    delete "/sessions", SessionController, only: [:delete]
 
     resources "/users", UserController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
