@@ -25,11 +25,10 @@ defmodule TaskTrackerSPAWeb.Router do
     pipe_through :api
 
     resources "/sessions", SessionController, only: [:create]
-    delete "/sessions", SessionController, only: [:delete]
+    delete "/sessions", SessionController, :delete
 
     resources "/users", UserController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
-    post "/token", TokenController, :create
   end
 
   # Other scopes may use custom stacks.

@@ -18,4 +18,9 @@ defmodule TaskTrackerSPAWeb.SessionController do
       |> send_resp(:created, Jason.encode!(resp))
     end
 end
+
+  def delete(conn, _params) do
+    conn
+    |> render("delete_token.json")
+  end
 end
