@@ -22,11 +22,11 @@ function Task(props) {
   return <div className="card col-4">
     <div className="card-body">
       <h2 className="card-title">{task.title}</h2>
-      <p className="card-text">
+      <div className="card-text">
         <p>Description: {task.desc}</p>
         <p>Time: {task.time}</p>
         <p>Completed: {task.completed}</p>
-      </p>
+      </div>
       <p className="form-inline">
         <button className="btn btn-primary">
           Edit

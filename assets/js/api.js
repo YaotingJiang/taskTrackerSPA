@@ -53,13 +53,40 @@ send_post(path, data, callback) {
       {email, password},
       (resp) => {
         store.dispatch({
-          type: 'NEW_SESSION',
+          type: 'SET_TOKEN',
           data: resp.data,
         });
       }
     );
+
+//  console.log("session created: " + email = " " + password);
+  }
+
+
+ // add path in the router, token controller
+  get_login_request(data) {
+    $.ajax("/api/v1/sessions", {
+      method: "post",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(data),
+      success: (resp) => {
+        store.dispatch(
+          {
+            type: "SET_TOKEN",
+            token: resp,
+          }
+        )
+      },
+
+      error: (resp) => {
+        alert("email or password is not correct, please try again")
+      }
+    });
   }
 }
+
+
 
 // create_session(email, password) {
 //   $.ajax("/api/v1/sessions", {

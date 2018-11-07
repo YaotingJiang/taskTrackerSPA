@@ -1,57 +1,91 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import api from './api';
+// import {NavBar, NavItem, Input, Button, Form, FormGroup} from 'reactstrap';
+import { Form, FormGroup, NavItem, Input, Button } from 'reactstrap';
 
-export default function Header(props) {
-  let {root, session} = props;
+let LoginForm = connect(({login}) => {return {login};})((props) => {
+  function update(ev) {
+    let tgt = $(ev.target);
+    let data = {};
+    data[tgt.attr('name')] = tgt.val();
+    props.dispatch({
+      type: 'UPDATE_LOGIN_FORM',
+      data: data,
+    });
+  }
 
-  function userlogin() {
-    let email = $('#login-email').val();
-    let password = $('login-pass').val();
-    api.create_session(email, password);
+  function create_token(ev) {
+    api.get_login_request(props.login);
+    console.log(props.login);
   }
 
 
-  function userlogout() {
+  return <div className="navbar-text">
+    <Form inline>
+      <FormGroup>
+        <Input type="text" name="email" placeholder="email"
+               value={props.login.email} onChange={update} />
+      </FormGroup>
+      <FormGroup>
+        <Input type="password" name="password" placeholder="password"
+               value={props.login.passward} onChange={update} />
+      </FormGroup>
+      <Button onClick={create_token}>Log In</Button>
+    </Form>
+  </div>;
+});
+
+
+let Session = connect(({token}) => {return {token};})((props) => {
+  function destory_token() {
     props.dispatch({
       type: 'DESTROY_TOKEN'
-    })
+    });
   }
 
-  let session_view = <div className="form-inline my-2">
-    <input id="login-email" type="email" placeholder="email" />
-    <input id="login-pass" type="password" placeholder="password" />
-    <button className="btn btn-secondary" onClick={userlogin}>Login</button>
-  </div>;
 
-  let login_view = <div className="form-inline my-2">
-    <p></p>
-    <button className="btn btn-secondary">Logout</button>
-  </div>
+  return <div className="navbar-text">
+      {props.token.name}
+      <Button onClick={destory_token}>Log out</Button>
+    </div>;
+});
 
-  // if(sessioncreated) {
-  //   return <div className="row my-2">
-  //     <div className="col-4">
-  //       <h1><Link to={"/"} onClick={root.fetch_tasks.bind(root)}>Task Tracker</Link></h1>
-  //     </div>
-  //     <div className="col-2">
-  //       <p><Link to={"/users"} onClick={root.fetch_users.bind(root)}>Users</Link></p>
-  //     </div>
-  //     <div className="col-6">
-  //         {login_view}
-  //     </div>
-  //   </div>;
-  // } else {
-    return <div className="row my-2">
-      <div className="col-4">
-        <h1><Link to={"/"} onClick={api.fetch_tasks()}>Task Tracker</Link></h1>
-      </div>
-      <div className="col-2">
-        <p><Link to={"/users"} onClick={api.fetch_users()}>Users</Link></p>
-      </div>
-      <div className="col-6">
-          {session_view}
-        </div>
-      </div>;
-  // }
+function Header(props) {
+  // let {root, session} = props;
+  let session_info;
+  if(props.token) {
+    session_info = <Session session={props.token} />
+  } else {
+    session_info = <LoginForm />
+  }
+
+
+  return (
+    <nav className="navbar navbar-light navbar-expand" style={{backgroundColor: "#e3f2fd"}}>
+      <span className="navbar-brand">
+        Task Tracker
+      </span>
+      <ul className="navbar-nav mr-auto">
+        <NavItem>
+          <NavLink to="/" exact={true} activeClassName="active" className="nav-link">Home</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/users" href="#" className="nav-link">Users</NavLink>
+        </NavItem>
+      </ul>
+      { session_info }
+    </nav>
+  );
+
 }
+
+function state2props(state) { // <=
+  console.log("rerender", state);
+  return {
+    token: state.token,
+  };
+}
+
+export default connect(state2props)(Header);
