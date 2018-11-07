@@ -50,10 +50,9 @@ let empty_token = {
   id: "",
 }
 
-function token(state = empty_token, action) {
+function token(state = null, action) {
   switch(action.type) {
     case 'SET_TOKEN':
-      //return Object.assign({}, state, action.data);
       return action.token;
     default:
       return state;

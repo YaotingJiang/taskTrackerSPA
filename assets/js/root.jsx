@@ -22,7 +22,6 @@ class Root extends React.Component {
     super(props);
     api.fetch_users();
     api.fetch_tasks();
-
   }
 
   render() {

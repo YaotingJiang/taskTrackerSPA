@@ -44,7 +44,7 @@ let Session = connect(({token}) => {return {token};})((props) => {
 
 
   return <div className="navbar-text">
-      {props.token.name}
+      {props.token.user_id}
       <Button onClick={delete_token}>Log out</Button>
     </div>;
 });
@@ -55,7 +55,7 @@ function Header(props) {
     session_info = <Session token={props.token} />
   } else {
     session_info = <LoginForm />
-  }
+}
 
 
   return (
@@ -65,7 +65,7 @@ function Header(props) {
       </span>
       <ul className="navbar-nav mr-auto">
         <NavItem>
-          <NavLink to="/" exact={true} activeClassName="active" className="nav-link">Home</NavLink>
+          <NavLink to="/sessions" exact={true} activeClassName="active" className="nav-link">Home</NavLink>
         </NavItem>
         <NavItem>
           <NavLink to="/users" href="#" className="nav-link">Users</NavLink>

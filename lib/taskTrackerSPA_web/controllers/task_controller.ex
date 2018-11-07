@@ -35,7 +35,6 @@ defmodule TaskTrackerSPAWeb.TaskController do
 
   def delete(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
-
     with {:ok, %Task{}} <- Tasks.delete_task(task) do
       send_resp(conn, :no_content, "")
     end

@@ -21,3 +21,4 @@ Repo.insert!(%User{email: "bob@example.com", name: "bob", password_hash: pwhash}
 alias TaskTrackerSPA.Tasks.Task
 
 Repo.insert!(%Task{title: "ood", desc: "cs3500", time: 15, completed: false, user_id: 1})
+Repo.insert!(%Task{title: "web", desc: "cs4550", time: 15, completed: false, user_id: 1})

@@ -85,6 +85,49 @@ send_post(path, data, callback) {
     });
   }
 
+  add_task_request() {
+    $.ajax("/api/v1/tasks", {
+      method: "post",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(data),
+      success: (resp) => {
+        alert("new task is created")
+        store.dispatch(
+          {
+            type: "ADD_TASK",
+            token: null,
+          }
+        )
+      },
+      error: (resp) => {
+        alert("something is wrong, please try again")
+      }
+    });
+  }
+
+  delete_task_request(data) {
+    console.log(data);
+    $.ajax("/api/v1/tasks/" + data, {
+      method: "delete",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(data),
+      success: (resp) => {
+        alert("this task is deleted")
+        store.dispatch(
+          {
+            type: "TASK_LIST",
+            tasks: resp.data,
+          }
+        )
+      },
+      error: (resp) => {
+        alert("something is wrong, please try again")
+      }
+    });
+  }
+
 }
 
 export default new TheServer();
