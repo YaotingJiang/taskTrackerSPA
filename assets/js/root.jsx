@@ -48,9 +48,6 @@ let Root = connect((state) => state)((props) => {
             <Route path="/tasks/edit/:id" exact={true} render={() =>
                 <EditTask />
               } />
-            <Route path="/tasks/:id" exact={true} render={() =>
-                  <UserList/>
-              } />
             <Route path="/tasks/new" exact={true} render={() =>
                     <CreateTask />
               } />
@@ -60,3 +57,8 @@ let Root = connect((state) => state)((props) => {
       </Router>
     </div>;
 });
+
+
+// <Route path="/tasks/:id" exact={true} render={() =>
+//       <TaskList/>
+//   } />
