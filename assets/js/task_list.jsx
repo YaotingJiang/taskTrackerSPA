@@ -38,13 +38,14 @@ function Task(props) {
     var complete = "No";
   }
 
+  //<p>Assigned To: {task.user.name}</p>
   return <div className="card col-4" style={{marginLeft: "10px"}}>
     <div className="card-body">
       <h2 className="card-title">{task.title}</h2>
       <div className="card-text">
+        <p>Assigned To: {task.user.name}</p>
         <p>Description: {task.desc}</p>
         <p>Time: {task.time}</p>
-        <p>ID: {task.id}</p>
         <p>Completed: {complete}</p>
       </div>
       <p className="form-inline">
