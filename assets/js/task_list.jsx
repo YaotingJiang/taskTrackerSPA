@@ -6,6 +6,8 @@ import EditTask from './edit_task';
 import ReactDOM from 'react-dom';
 import $ from "jquery";
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+
 
 function TaskList(props) {
   let {root, tasks, dispatch} = props;
@@ -22,7 +24,7 @@ function Task(props) {
   let {root, task, dispatch} = props;
 
   function delete_task() {
-    api.delete_task_request(task.id)
+    api.delete_task_request(task.id, props.history)
     console.log("task id:" + task.id);
   }
 
@@ -68,4 +70,4 @@ function state2props(state) { // <=
 }
 
 // Export result of curried function call.
-export default connect(state2props)(TaskList); // <=
+export default withRouter(connect(state2props)(TaskList)); // <=

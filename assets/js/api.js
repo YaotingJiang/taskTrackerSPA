@@ -105,7 +105,7 @@ send_post(path, data, callback) {
     });
   }
 
-  delete_task_request(data) {
+  delete_task_request(data, history) {
     console.log(data);
     $.ajax("/api/v1/tasks/" + data, {
       method: "delete",
@@ -120,6 +120,7 @@ send_post(path, data, callback) {
             tasks: resp.data,
           }
         )
+        history.push('/')
       },
       error: (resp) => {
         alert("something is wrong, please try again")
@@ -127,7 +128,7 @@ send_post(path, data, callback) {
     });
   }
 
-  add_task_request(data) {
+  add_task_request(data, history) {
     console.log(data.token);
     console.log(data);
     $.ajax("/api/v1/tasks/", {
@@ -143,6 +144,7 @@ send_post(path, data, callback) {
             task: resp.data,
           }
         )
+        history.push('/')
       },
       error: (resp) => {
         alert("something is wrong, please try again")

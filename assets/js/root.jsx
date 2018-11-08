@@ -10,8 +10,8 @@ import { Provider } from 'react-redux';
 import api from './api';
 import EditTask from './edit_task';
 import { connect } from 'react-redux';
-import CreateTask from './create_task';
 import Registration from './registration';
+import NewTask from './new_task';
 
 
 
@@ -49,7 +49,7 @@ let Root = connect((state) => state)((props) => {
                 <EditTask />
               } />
             <Route path="/tasks/new" exact={true} render={() =>
-                    <CreateTask />
+                    <NewTask />
               } />
             </div>
           </div>
@@ -57,8 +57,3 @@ let Root = connect((state) => state)((props) => {
       </Router>
     </div>;
 });
-
-
-// <Route path="/tasks/:id" exact={true} render={() =>
-//       <TaskList/>
-//   } />

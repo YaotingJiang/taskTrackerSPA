@@ -51,7 +51,7 @@ function users(state = [], action) {
 
 function form(state = empty_form, action) {
   switch (action.type) {
-    case 'UPDATE_FORM':
+    case 'UPDATE_TASK':
       return Object.assign({}, state, action.data);
     case 'CLEAR_FORM':
       return empty_form;
@@ -121,11 +121,22 @@ function token(state = null, action) {
    }
  }
 
+ function create_task_form(state = empty_form, action) {
+   switch(action.type) {
+     case 'UPDATE_TASK':
+      return Object.assign({}, state, action.data);
+     case 'CLEAR_FORM':
+      return empty_form;
+    default:
+      return state;
+   }
+ }
+
 
 function root_reducer(state0, action) {
   console.log("reducer", state0, action);
 
-  let reducer = combineReducers({tasks, users, form, token, login, edit_task_form, register});
+  let reducer = combineReducers({tasks, users, form, token, login, edit_task_form, register, create_task_form});
   let state1 = reducer(state0, action);
 
   console.log("reducer1", state1);
