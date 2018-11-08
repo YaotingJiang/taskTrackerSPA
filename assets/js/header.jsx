@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import api from './api';
 import { Form, FormGroup, NavItem, Input, Button } from 'reactstrap';
+import Registration from './registration';
 
 let LoginForm = connect(({login}) => {return {login};})((props) => {
   function update(ev) {
@@ -32,6 +33,11 @@ let LoginForm = connect(({login}) => {return {login};})((props) => {
                value={props.login.passward} onChange={update} />
       </FormGroup>
       <Button onClick={create_token}>Log In</Button>
+      <NavItem>
+        <NavLink to="/registration" exact={true} activeClassName="active" className="nav-link">
+          Register
+        </NavLink>
+      </NavItem>
     </Form>
   </div>;
 });
@@ -65,7 +71,7 @@ function Header(props) {
       </span>
       <ul className="navbar-nav mr-auto">
         <NavItem>
-          <NavLink to="/sessions" exact={true} activeClassName="active" className="nav-link">Home</NavLink>
+          <NavLink to="/" exact={true} activeClassName="active" className="nav-link">Home</NavLink>
         </NavItem>
         <NavItem>
           <NavLink to="/users" href="#" className="nav-link">Users</NavLink>

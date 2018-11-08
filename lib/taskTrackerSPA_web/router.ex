@@ -19,6 +19,8 @@ defmodule TaskTrackerSPAWeb.Router do
     get "/", PageController, :index
     get "/users", PageController, :index
     get "/tasks", PageController, :index
+    get "/tasks/edit/:id", PageController, :index
+    get "/tasks/:id", PageController, :index
   end
 
   scope "/api/v1", TaskTrackerSPAWeb do
@@ -28,6 +30,7 @@ defmodule TaskTrackerSPAWeb.Router do
     delete "/sessions", SessionController, :delete
 
     resources "/users", UserController, except: [:new, :edit]
+    post "/newuser", UserController, :create
     resources "/tasks", TaskController, except: [:new, :edit]
   end
 

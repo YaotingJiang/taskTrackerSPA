@@ -85,23 +85,22 @@ send_post(path, data, callback) {
     });
   }
 
-  add_task_request() {
-    $.ajax("/api/v1/tasks", {
+  register_request(data, history) {
+    $.ajax("/api/v1/newuser", {
       method: "post",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      data: JSON.stringify(data),
+      data: JSON.stringify({user: data}),
       success: (resp) => {
-        alert("new task is created")
         store.dispatch(
           {
-            type: "ADD_TASK",
-            token: null,
+            type: "ADD_USER",
+            user: resp.data,
+
           }
         )
-      },
-      error: (resp) => {
-        alert("something is wrong, please try again")
+      history.push('/')
+      //hisoty
       }
     });
   }
@@ -128,6 +127,79 @@ send_post(path, data, callback) {
     });
   }
 
+  add_task_request(data) {
+    console.log(data.token);
+    console.log(data);
+    $.ajax("/api/v1/tasks/", {
+      method: "post",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify({token: data.tokens, task: data}),
+      success: (resp) => {
+        alert("this task is added")
+        store.dispatch(
+          {
+            type: "ADD_TASK",
+            task: resp.data,
+          }
+        )
+      },
+      error: (resp) => {
+        alert("something is wrong, please try again")
+      }
+    });
+  }
+
+  edit_task_request(id){
+    console.log("edit task request " + id);
+    $.ajax("/api/v1/tasks/" + id, {
+      method: "get",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: "",
+      success: (resp) => {
+        let showtask = {
+          title: resp.data.title,
+          desc: resp.data.desc,
+          time: resp.data.time,
+          completed: resp.data.completed,
+          id: resp.data.id,
+          user_id: resp.data.user_id,
+        }
+        store.dispatch(
+          {
+            type: "EDIT_TASK",
+            task: showtask,
+          }
+        )
+      },
+      error: (resp) => {
+        alert("something is wrong, please try again")
+      }
+    });
+  }
+
+  submit_edit_request(data, id, history) {
+    console.log("submit id " + id);
+    $.ajax("/api/v1/tasks/" + id, {
+      method: "put",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify({ task: data }),
+      success: (resp) => {
+        store.dispatch(
+          {
+            type: "SUBMIT_EDIT_TASK",
+            task: resp.data,
+          }
+        )
+        history.push('/')
+      },
+      error: (resp) => {
+        alert("something is wrong, please try again")
+      }
+    });
+  }
 }
 
 export default new TheServer();

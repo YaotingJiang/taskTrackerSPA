@@ -4,11 +4,27 @@ import deepFreeze from 'deep-freeze';
 
 
 function tasks(state = [], action) {
+  //let state2 = Object.assign([], state);
   switch (action.type) {
     case 'TASK_LIST':
       return action.data;
+    case 'ADD_TASK':
+      return [action.task, ...state];
+    // case 'SUBMIT_EDIT_TASK':
+    //   const id = state.findIndex(tasks => {
+    //     return tasks.id == action.task.id;
+    //   })
+    //   state2.splice(id, 1);
+    //   return [action.task, ...state2];
+      //Object.assign({}, state, action.data);
     default:
       return state;
+      // case 'DELETE_TASK':
+      //   const id2 = state.findIndex(tasks => {
+      //     return tasks.id = action.task.id;
+      //   })
+      //   state2.splice(id2, 1);
+      //   return state2;
   }
 }
 
@@ -16,6 +32,8 @@ function users(state = [], action) {
   switch (action.type) {
     case 'USER_LIST':
       return action.data;
+    case 'ADD_USER':
+      return [action.user, ...state];
     default:
       return state;
   }
@@ -29,7 +47,6 @@ function users(state = [], action) {
     completed: false,
     token: "",
     id: "",
-    creator_id: "",
  }
 
 function form(state = empty_form, action) {
@@ -40,6 +57,20 @@ function form(state = empty_form, action) {
       return empty_form;
     case 'SET_TOKEN':
       return Object.assign({}, state, action.token);
+    default:
+      return state;
+  }
+}
+
+function edit_task_form(state = empty_form, action) {
+  console.log(action);
+  switch (action.type) {
+    case 'CLEAR_FORM':
+      return empty_form;
+    case 'UPDATE_TASK':
+      return Object.assign({}, state, action.data);
+    case 'EDIT_TASK':
+      return Object.assign({}, state, action.task);
     default:
       return state;
   }
@@ -94,7 +125,7 @@ function token(state = null, action) {
 function root_reducer(state0, action) {
   console.log("reducer", state0, action);
 
-  let reducer = combineReducers({tasks, users, form, token, login, register});
+  let reducer = combineReducers({tasks, users, form, token, login, edit_task_form, register});
   let state1 = reducer(state0, action);
 
   console.log("reducer1", state1);

@@ -50,6 +50,11 @@ defmodule TaskTrackerSPA.Users do
 
   """
   def create_user(attrs \\ %{}) do
+    {password, attrs} = Map.pop(attrs, "password")
+    attrs = Map.put(attrs, "password_hash", Comeonin.Argon2.hashpwsalt(
+    password
+    ))
+    IO.inspect(attrs)
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()

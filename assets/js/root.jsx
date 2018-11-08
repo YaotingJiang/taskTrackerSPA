@@ -8,23 +8,25 @@ import UserList from './user_list';
 import TaskList from './task_list';
 import { Provider } from 'react-redux';
 import api from './api';
+import EditTask from './edit_task';
+import { connect } from 'react-redux';
+import CreateTask from './create_task';
+import Registration from './registration';
+
 
 
 export default function root_init(node, store) {
+  api.fetch_users();
+  api.fetch_tasks();
   ReactDOM.render(
     <Provider store={store}>
       <Root tasks={window.tasks} />
     </Provider>, node);
 }
 
-class Root extends React.Component {
-  constructor(props) {
-    super(props);
-    api.fetch_users();
-    api.fetch_tasks();
-  }
+let Root = connect((state) => state)((props) => {
 
-  render() {
+
     return <div>
       <Router>
         <div>
@@ -32,15 +34,29 @@ class Root extends React.Component {
           <div className="row">
             <div className="col-8">
               <Route path="/" exact={true} render={() =>
-                <TaskList />
+                  <div>
+                    <Link to={"tasks/new"} className="btn btn-primary">Create New Task</Link>
+                    <TaskList />
+                  </div>
               } />
               <Route path="/users" exact={true} render={() =>
-                <TaskList />
+                <UserList />
+              } />
+            <Route path="/registration" exact={true} render={() =>
+                <Registration  />
+              } />
+            <Route path="/tasks/edit/:id" exact={true} render={() =>
+                <EditTask />
+              } />
+            <Route path="/tasks/:id" exact={true} render={() =>
+                  <UserList/>
+              } />
+            <Route path="/tasks/new" exact={true} render={() =>
+                    <CreateTask />
               } />
             </div>
           </div>
         </div>
       </Router>
     </div>;
-  }
-}
+});

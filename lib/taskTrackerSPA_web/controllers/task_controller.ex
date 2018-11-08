@@ -27,8 +27,10 @@ defmodule TaskTrackerSPAWeb.TaskController do
 
   def update(conn, %{"id" => id, "task" => task_params}) do
     task = Tasks.get_task!(id)
+    result = Tasks.update_task(task, task_params)
+    IO.inspect(result)
 
-    with {:ok, %Task{} = task} <- Tasks.update_task(task, task_params) do
+    with {:ok, %Task{} = task} <- result do
       render(conn, "show.json", task: task)
     end
   end
@@ -37,6 +39,8 @@ defmodule TaskTrackerSPAWeb.TaskController do
     task = Tasks.get_task!(id)
     with {:ok, %Task{}} <- Tasks.delete_task(task) do
       send_resp(conn, :no_content, "")
+      conn
+      |> put_resp_header("location", Routes.task_path(conn, :index, task))
     end
   end
 end
