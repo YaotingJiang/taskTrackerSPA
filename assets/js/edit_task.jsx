@@ -13,8 +13,9 @@ function EditTask(props) {
 
     if((tgt).is(':checked')) {
       data.completed = true
+    } else {
+      data.completed = false
     }
-
     props.dispatch({
       type: 'UPDATE_TASK',
       data: data,

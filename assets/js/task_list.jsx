@@ -11,7 +11,7 @@ import store from './store';
 
 
 export default connect((state) => (state))((props) => {
-//  if(props.token) {
+  if(props.token) {
     let {root, tasks, dispatch} = props;
     let prods = _.map(tasks, (tt) =>
       <Task key={tt.id} task={tt} root={root} dispatch= {dispatch} />);
@@ -19,12 +19,13 @@ export default connect((state) => (state))((props) => {
           {prods}
         </div>
     </div>;
-//  } else {
-//    console.log("Token is " + props.token)
-  //  return <div>
-  //    <h1 style={{marginTop: "50px"}}>Welcome To Task Tracker!</h1>
-  //  </div>;
-//  }
+   } else {
+    console.log("Token is " + props.token)
+    return <div>
+      <h1 style={{marginTop: "50px"}}>Welcome To Task Tracker!</h1>
+      <h3>Please Login</h3>
+    </div>;
+  }
 });
 
 
@@ -32,7 +33,7 @@ function Task(props) {
   let {root, task, dispatch} = props;
 
   function delete_task() {
-    api.delete_task_request(task.id, props.history)
+    api.delete_task_request(task.id)
     console.log("task id:" + task.id);
   }
 

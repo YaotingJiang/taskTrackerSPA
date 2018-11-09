@@ -4,13 +4,28 @@ import deepFreeze from 'deep-freeze';
 
 
 function tasks(state = [], action) {
+  const state2 = Object.assign([], state);
   switch (action.type) {
     case 'TASK_LIST':
       return action.data;
     case 'ADD_TASK':
       return [action.task, ...state];
+    case 'TASK_DELETE':
+        const id = state.findIndex(tasks => {
+          return tasks.id == action.data
+     })
+        console.log("OUTpUT ID HERE" + id)
+        state2.splice(id, 1)
+        console.log("STATE AFER DELETE " + id);
+        return state2;
     default:
       return state;
+      case 'SUBMIT_EDIT_TASK':
+        const id2 = state.findIndex(tasks => {
+          return tasks.id == action.data
+        })
+        state2.splice(id2, 1)
+        return [action.task, ...state2];
   }
 }
 
@@ -37,7 +52,7 @@ function users(state = [], action) {
 
 function form(state = empty_form, action) {
   switch (action.type) {
-    case 'UPDATE_TASK':
+    case 'UPDATE_FORM':
       return Object.assign({}, state, action.data);
     case 'CLEAR_FORM':
       return empty_form;
@@ -122,7 +137,7 @@ function token(state = null, action) {
 function root_reducer(state0, action) {
   console.log("reducer", state0, action);
 
-  let reducer = combineReducers({tasks, users, token, form, login, edit_task_form, register, create_task_form});
+  let reducer = combineReducers({tasks, users, form, token, login, edit_task_form, register, create_task_form});
   let state1 = reducer(state0, action);
 
   console.log("reducer1", state1);

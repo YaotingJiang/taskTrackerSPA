@@ -105,22 +105,23 @@ send_post(path, data, callback) {
     });
   }
 
-  delete_task_request(data, history) {
-    console.log(data);
+  delete_task_request(data) {
+    console.log("What is the data " + data);
     $.ajax("/api/v1/tasks/" + data, {
       method: "delete",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify(data),
       success: (resp) => {
+        console.log("CHECK HERE")
         alert("this task is deleted")
         store.dispatch(
           {
-            type: "TASK_LIST",
-            tasks: resp.data,
+            type: "TASK_DELETE",
+            tasks: data,
           }
         )
-        history.push('/')
+        // history.push('/')
       },
       error: (resp) => {
         alert("something is wrong, please try again")

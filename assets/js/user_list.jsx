@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 
 function UserList(props) {
   let rows = _.map(props.users, (uu) => <User key={uu.id} user={uu} />);
-  return <div className="container">
+  return <div className="container" style={{marginTop: "50px"}}>
+    <h3>All Users</h3>
       <table className="table">
         <thead className="thead-light">
           <tr>
+            <th>Email</th>
             <th>Name</th>
-            <th>email</th>
-            <th></th>
+            <th>ID</th>
             <th></th>
           </tr>
         </thead>
@@ -27,6 +28,7 @@ function User(props) {
   return <tr>
     <td>{user.email}</td>
     <td>{user.name}</td>
+    <td>{user.id}</td>
   </tr>;
 }
 
