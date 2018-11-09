@@ -9,16 +9,16 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-alias TaskTrackerSPA.Repo
-alias TaskTrackerSPA.Users.User
-
-pwhash = Argon2.hash_pwd_salt("pass1")
-
-Repo.insert!(%User{email: "alice@example.com", name: "alice", password_hash: pwhash})
-Repo.insert!(%User{email: "bob@example.com", name: "bob", password_hash: pwhash})
-
-
-alias TaskTrackerSPA.Tasks.Task
-
-Repo.insert!(%Task{title: "ood", desc: "cs3500", time: 15, completed: false, user_id: 1})
-Repo.insert!(%Task{title: "web", desc: "cs4550", time: 15, completed: false, user_id: 1})
+# alias TaskTrackerSPA.Repo
+# alias TaskTrackerSPA.Users.User
+#
+# pwhash = Argon2.hash_pwd_salt("pass1")
+#
+# Repo.insert!(%User{email: "alice@example.com", name: "alice", password_hash: pwhash})
+# Repo.insert!(%User{email: "bob@example.com", name: "bob", password_hash: pwhash})
+#
+#
+# alias TaskTrackerSPA.Tasks.Task
+#
+# Repo.insert!(%Task{title: "ood", desc: "cs3500", time: 15, completed: false, user_id: 1})
+# Repo.insert!(%Task{title: "web", desc: "cs4550", time: 15, completed: false, user_id: 1})
