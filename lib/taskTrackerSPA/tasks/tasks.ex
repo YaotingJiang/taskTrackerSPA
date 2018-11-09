@@ -40,7 +40,7 @@ defmodule TaskTrackerSPA.Tasks do
 
   def get_task!(id) do
     Repo.get!(Task, id)
-    |> Repo.preload(:User)
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -55,10 +55,18 @@ defmodule TaskTrackerSPA.Tasks do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_task(attrs \\ %{}) do
-    %Task{}
-    |> Task.changeset(attrs)
-    |> Repo.insert()
+  #def create_task(attrs \\ %{}) do
+  #  %Task{}
+  #  |> Task.changeset(attrs)
+  #  |> Repo.insert()
+  #end
+
+   def create_task(attrs \\ %{}) do
+     {:ok, task} = %Task{}
+     |> Task.changeset(attrs)
+     |> Repo.insert()
+     task = Repo.preload(task, :user)
+     {:ok, task}
   end
 
   @doc """
@@ -74,11 +82,18 @@ defmodule TaskTrackerSPA.Tasks do
 
   """
   def update_task(%Task{} = task, attrs) do
-    task
-    |> Task.changeset(attrs)
-    |> Repo.update()
+   task
+   |> Task.changeset(attrs)
+   |> Repo.update()
   end
 
+  # def update_task(%Task{} = task, attrs) do
+  #   {:ok, task} = %Task{}
+  #   |> Task.changeset(attrs)
+  #   |> Repo.update()
+  #   task = Repo.preload(task, :user)
+  #   {:ok, task}
+  # end
   @doc """
   Deletes a Task.
 
@@ -93,6 +108,7 @@ defmodule TaskTrackerSPA.Tasks do
   """
   def delete_task(%Task{} = task) do
     Repo.delete(task)
+    # |> Repo.preload[:user]
   end
 
   @doc """

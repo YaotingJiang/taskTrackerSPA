@@ -50,10 +50,17 @@ let Session = connect(({token}) => {return {token};})((props) => {
 
 
   return <div className="navbar-text">
-      {props.token.user_id}
+      <p></p>
+      <span>|</span>
       <Button onClick={delete_token}>Log out</Button>
     </div>;
 });
+
+
+//<NavItem>
+  //<NavLink to={"/users/" + props.token.user_id} href="#" className="nav-link">Your Tasks</NavLink>
+//</NavItem>
+
 
 function Header(props) {
   let session_info;
@@ -61,26 +68,25 @@ function Header(props) {
     session_info = <Session token={props.token} />
   } else {
     session_info = <LoginForm />
-}
+  }
 
 
-  return (
-    <nav className="navbar navbar-light navbar-expand" style={{backgroundColor: "#e3f2fd"}}>
-      <span className="navbar-brand">
-        Task Tracker
-      </span>
-      <ul className="navbar-nav mr-auto">
-        <NavItem>
-          <NavLink to="/" exact={true} activeClassName="active" className="nav-link">Home</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/users" href="#" className="nav-link">Users</NavLink>
-        </NavItem>
-      </ul>
-      { session_info }
-    </nav>
-  );
-
+    return (
+      <nav className="navbar navbar-light navbar-expand" style={{backgroundColor: "#e3f2fd"}}>
+        <span className="navbar-brand">
+          Task Tracker
+        </span>
+        <ul className="navbar-nav mr-auto">
+          <NavItem>
+            <NavLink to="/" exact={true} activeClassName="active" className="nav-link">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/users" href="#" className="nav-link">Users</NavLink>
+          </NavItem>
+        </ul>
+        { session_info }
+      </nav>
+    );
 }
 
 function state2props(state) { // <=

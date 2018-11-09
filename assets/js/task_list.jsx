@@ -7,17 +7,25 @@ import ReactDOM from 'react-dom';
 import $ from "jquery";
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import store from './store';
 
 
-function TaskList(props) {
-  let {root, tasks, dispatch} = props;
-  let prods = _.map(tasks, (tt) =>
-    <Task key={tt.id} task={tt} root={root} dispatch= {dispatch} />);
-     return <div className="container" style={{marginTop: "35px"}}><div className="row">
-    {prods}
-  </div>
-</div>;
-}
+export default connect((state) => (state))((props) => {
+//  if(props.token) {
+    let {root, tasks, dispatch} = props;
+    let prods = _.map(tasks, (tt) =>
+      <Task key={tt.id} task={tt} root={root} dispatch= {dispatch} />);
+        return <div className="fluid-container" style={{marginTop: "35px"}}><div className="row">
+          {prods}
+        </div>
+    </div>;
+//  } else {
+//    console.log("Token is " + props.token)
+  //  return <div>
+  //    <h1 style={{marginTop: "50px"}}>Welcome To Task Tracker!</h1>
+  //  </div>;
+//  }
+});
 
 
 function Task(props) {
@@ -37,27 +45,25 @@ function Task(props) {
   } else {
     var complete = "No";
   }
-
-  //<p>Assigned To: {task.user.name}</p>
-  return <div className="card col-4" style={{marginLeft: "10px"}}>
-    <div className="card-body">
-      <h2 className="card-title">{task.title}</h2>
-      <div className="card-text">
-        <p>Assigned To: {task.user.name}</p>
-        <p>Description: {task.desc}</p>
-        <p>Time: {task.time}</p>
-        <p>Completed: {complete}</p>
+    return <div className="card col-4" style={{marginLeft: "10px", marginTop: "10px"}}>
+      <div className="card-body">
+        <h2 className="card-title">{task.title}</h2>
+        <div className="card-text">
+          <p>Assigned To: {task.user.name}</p>
+          <p>Description: {task.desc}</p>
+          <p>Time: {task.time}</p>
+          <p>Completed: {complete}</p>
+        </div>
+        <p className="form-inline">
+          <Link to={"tasks/edit/" + task.id} onClick={edit_task} className="btn btn-primary">
+            Edit
+          </Link>
+          <button className="btn btn-danger" onClick={delete_task}>
+            Delete
+          </button>
+        </p>
       </div>
-      <p className="form-inline">
-        <Link to={"tasks/edit/" + task.id} onClick={edit_task} className="btn btn-primary">
-          Edit
-        </Link>
-        <button className="btn btn-danger" onClick={delete_task}>
-          Delete
-        </button>
-      </p>
-    </div>
-  </div>;
+    </div>;
  }
 
 function state2props(state) { // <=
@@ -71,4 +77,4 @@ function state2props(state) { // <=
 }
 
 // Export result of curried function call.
-export default withRouter(connect(state2props)(TaskList)); // <=
+//export default withRouter(connect(state2props)(TaskList)); // <=

@@ -25,6 +25,14 @@ export default function root_init(node, store) {
 }
 
 let Root = connect((state) => state)((props) => {
+  let block;
+  if(props.token) {
+    block = <div>
+        <Link to={"tasks/new"} className="btn btn-primary" style={{marginTop: "25px"}}>Create New Task</Link>
+    </div>;
+  } else {
+    block = null;
+  }
 
 
     return <div>
@@ -32,11 +40,11 @@ let Root = connect((state) => state)((props) => {
         <div>
           <Header />
           <div className="row">
-            <div className="col-8">
+            <div className="col-12">
               <Route path="/" exact={true} render={() =>
                   <div>
-                    <Link to={"tasks/new"} className="btn btn-primary">Create New Task</Link>
-                    <TaskList />
+                  {block}
+                  <TaskList />
                   </div>
               } />
               <Route path="/users" exact={true} render={() =>
@@ -49,7 +57,7 @@ let Root = connect((state) => state)((props) => {
                 <EditTask />
               } />
             <Route path="/tasks/new" exact={true} render={() =>
-                    <NewTask />
+                <NewTask />
               } />
             </div>
           </div>
