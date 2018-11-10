@@ -18,3 +18,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+## 
+  * Users can only see list of tasks or assign tasks when they are logged in.
+  * All tasks will show up on the homepage after user login 
+  * Users can see a list of users by going to /users
+  * Users can assign tasks to others by entering their user id. 
