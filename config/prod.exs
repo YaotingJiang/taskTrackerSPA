@@ -14,7 +14,7 @@ config :taskTrackerSPA, TaskTrackerSPAWeb.Endpoint,
   root: ".",
   version: Application.spec(:phoenix_distillery, :vsn),
   http: [:inet6, port: {:system, "PORT"}],
-  url: [host: "tasks3.yaotingjiangcs4550.pw", port: 80],
+  url: [scheme: "https", host: "tasks3.yaotingjiangcs4550.pw", port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
